@@ -16,6 +16,7 @@ class GameViewController: UIViewController {
         }
     }
     @IBOutlet weak var submitButton: UIButton!
+    var name: String?
     
     var selectedQuestion = 0
     var playerScores = 0
@@ -29,29 +30,28 @@ class GameViewController: UIViewController {
         Question(image: UIImage(named: "china")!,
                  answers: [Answer(name: "North Korea"), Answer(name: "Chile", type: .wrong), Answer(name: "Japan"), Answer(name: "China", type: .correct)]),
         Question(image: UIImage(named: "canada")!,
-                 answers: [Answer(name: "Canada", type: .correct), Answer(name: "Mexico"), Answer(name: "Singapore"), Answer(name: "UK", type: .wrong)]),
+                 answers: [Answer(name: "Canada", type: .correct), Answer(name: "Mexico"), Answer(name: "Singapore"), Answer(name: "UK")]),
     ]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        submitButton.isEnabled = false
+        submitButton.isHidden = true
         displayQuestions()
     }
     
     //MARK: Display questions mthd
     private func displayQuestions() {
-            flagImage?.image = questions[selectedQuestion].image
-        submitButton.isEnabled = false
-            for i in 0..<(answerOptions?.count ?? 0) {
-                answerOptions[i].setTitle(questions[selectedQuestion].answers[i].name, for: .normal)
-                answerOptions[i].tag = i
-                answerOptions[i].backgroundColor = .white
-                answerOptions[i].setTitleColor(.black, for: .normal)
-                answerOptions[i].layer.cornerRadius = 15
-                answerOptions[i].isEnabled = true
-            }
+        flagImage?.image = questions[selectedQuestion].image
+        for i in 0..<(answerOptions?.count ?? 0) {
+            answerOptions[i].setTitle(questions[selectedQuestion].answers[i].name, for: .normal)
+            answerOptions[i].tag = i
+            answerOptions[i].backgroundColor = .white
+            answerOptions[i].setTitleColor(.black, for: .normal)
+            answerOptions[i].layer.cornerRadius = 15
+            answerOptions[i].isEnabled = true
+        }
     }
-
+    
     //MARK: Click on answer
     @IBAction func clickOnButton(_ sender: UIButton) {
         let indexAnswer = sender.tag
@@ -59,47 +59,52 @@ class GameViewController: UIViewController {
         
         if sender.titleLabel?.text == currentQuestion.answers[indexAnswer].name && currentQuestion.answers[indexAnswer].type == .correct {
             sender.backgroundColor = .green
-            //sender.setTitleColor(.white, for: .normal)
             playerScores += 1
         } else {
             sender.backgroundColor = .systemRed
-            //sender.setTitleColor(.white, for: .normal)
             
             for button in answerOptions {
                 for i in 0..<currentQuestion.answers.count {
                     if button.titleLabel?.text == currentQuestion.answers[i].name && currentQuestion.answers[i].type == .correct {
                         button.backgroundColor = .green
-                        //button.setTitleColor(.white, for: .normal)
                     }
                 }
             }
         }
-        answerOptions.forEach { $0.isEnabled = false}
-        submitButton.isEnabled = true
+        answerOptions.forEach { $0.isEnabled = false }
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//            self.selectedQuestion += 1
-//            self.showQuestions()
-//        }
+        if selectedQuestion < questions.count - 1 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.selectedQuestion += 1
+                self.displayQuestions()
+            }
+        } else {
+            submitButton.isHidden = false
+        }
     }
     
     //MARK: Click on submit
     @IBAction func submitButtonPressed(_ sender: Any) {
-        if selectedQuestion < questions.count - 1 {
-            selectedQuestion += 1
-            displayQuestions()
-        } else {
-            guard let firstVC = storyboard?.instantiateViewController(withIdentifier: "first screen") as? FirstScreenViewController else { return }
-            print(firstVC.savePlayer)
-            firstVC.savePlayer = { name in
-                UserDefaults.standard.set(self.playerScores, forKey: name)
-                for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
-                    print("\(key) = \(value) \n")
+        guard let name = name else { return }
+        
+        if !LeaderboardData.shared.leaderboard.isEmpty {
+            for index in 0..<LeaderboardData.shared.leaderboard.count {
+                if LeaderboardData.shared.leaderboard[index].name == name {
+                    LeaderboardData.shared.leaderboard.remove(at: index)
+                    LeaderboardData.shared.leaderboard.append(Leaderboard(name: name, score: playerScores))
+                    break
+                } else {
+                    LeaderboardData.shared.leaderboard.append(Leaderboard(name: name, score: playerScores))
+                    break
                 }
             }
+        } else {
+            LeaderboardData.shared.leaderboard.append(Leaderboard(name: name, score: playerScores))
         }
-        
+ 
+        LeaderboardData.shared.encodeToUserDefaults()
+        dismiss(animated: true)
     }
     
+    
 }
-

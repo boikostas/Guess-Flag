@@ -22,7 +22,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="npz-5R-EdA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-632" y="4"/>
+            <point key="canvasLocation" x="-709" y="331"/>
         </scene>
         <!--First Screen View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -46,6 +46,7 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Leaderboard"/>
                                 <connections>
                                     <action selector="leaderBoardButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VCy-QL-SJd"/>
+                                    <segue destination="4ru-23-ED4" kind="show" id="edw-Aq-5VV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qF2-du-fCV">
@@ -62,10 +63,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="JOG-2Y-P4U"/>
+                    <connections>
+                        <segue destination="fJc-DE-C2z" kind="show" id="bdS-WW-l7H"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="103" y="4"/>
+            <point key="canvasLocation" x="25" y="331"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="82G-NC-rfg">
@@ -76,7 +80,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Zst-4J-lGA">
-                                <rect key="frame" x="20" y="380" width="353" height="184"/>
+                                <rect key="frame" x="20" y="424" width="353" height="184"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IjS-nn-HVA">
                                         <rect key="frame" x="0.0" y="0.0" width="353" height="34.333333333333336"/>
@@ -101,7 +105,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSe-Qj-kPS">
-                                        <rect key="frame" x="0.0" y="98.666666666666686" width="353" height="36"/>
+                                        <rect key="frame" x="0.0" y="98.666666666666629" width="353" height="36"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="C" cornerStyle="large">
@@ -125,7 +129,7 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Yk-nl-Vhy">
-                                <rect key="frame" x="45" y="120" width="303" height="190"/>
+                                <rect key="frame" x="45" y="164" width="303" height="190"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lq3-cS-GmR">
                                 <rect key="frame" x="158" y="629" width="78" height="35"/>
@@ -156,6 +160,7 @@
                             <constraint firstItem="vlO-LQ-CcW" firstAttribute="trailing" secondItem="7Yk-nl-Vhy" secondAttribute="trailing" constant="45" id="xb8-UW-5vd"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="ceJ-iK-hDZ"/>
                     <connections>
                         <outlet property="flagImage" destination="7Yk-nl-Vhy" id="uKU-tY-J3s"/>
                         <outlet property="submitButton" destination="lq3-cS-GmR" id="xVk-3Y-P3t"/>
@@ -168,6 +173,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mhB-8c-pYD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="855.72519083969462" y="3.5211267605633805"/>
+        </scene>
+        <!--Leaderboard-->
+        <scene sceneID="HwM-Fb-eEP">
+            <objects>
+                <viewController id="4ru-23-ED4" customClass="LeaderboardViewController" customModule="Guess_Flag" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nqN-Ld-IYC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="i5s-ME-PKd">
+                                <rect key="frame" x="0.0" y="103" width="393" height="681"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="yV1-44-NtB"/>
+                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                        <constraints>
+                            <constraint firstItem="yV1-44-NtB" firstAttribute="bottom" secondItem="i5s-ME-PKd" secondAttribute="bottom" constant="34" id="DMe-WY-Pp4"/>
+                            <constraint firstItem="i5s-ME-PKd" firstAttribute="top" secondItem="yV1-44-NtB" secondAttribute="top" id="FlJ-oh-7f0"/>
+                            <constraint firstItem="i5s-ME-PKd" firstAttribute="trailing" secondItem="yV1-44-NtB" secondAttribute="trailing" id="Hhg-wn-ofh"/>
+                            <constraint firstItem="i5s-ME-PKd" firstAttribute="leading" secondItem="yV1-44-NtB" secondAttribute="leading" id="xaJ-tq-StL"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Leaderboard" id="m7c-71-rm3"/>
+                    <connections>
+                        <outlet property="tableView" destination="i5s-ME-PKd" id="o7w-hC-bD8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EJD-Vx-07z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="856" y="654"/>
         </scene>
     </scenes>
     <resources>

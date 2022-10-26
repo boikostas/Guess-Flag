@@ -11,11 +11,12 @@ class FirstScreenViewController: UIViewController {
     
     var nameTextField = UITextField()
     var alert = UIAlertController()
-    var savePlayer: ((String) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+//        UserDefaults.standard.removeObject(forKey: "leaderboard")
+        LeaderboardData.shared.decodeFromUserDefaults()
+        print(LeaderboardData.shared.leaderboard)
     }
 
     @IBAction func startGameButtonPressed(_ sender: Any) {
@@ -30,11 +31,11 @@ class FirstScreenViewController: UIViewController {
         
         let startAction = UIAlertAction(title: "Let`s start", style: .default) { action in
             guard let name = self.nameTextField.text else { return }
-            self.savePlayer?(name)
                 
             guard let gameVC = self.storyboard?.instantiateViewController(withIdentifier: "game") as? GameViewController else { return }
-            
+            gameVC.name = name
             self.show(gameVC, sender: nil)
+            
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
