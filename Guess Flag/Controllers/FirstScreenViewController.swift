@@ -16,7 +16,6 @@ class FirstScreenViewController: UIViewController {
         super.viewDidLoad()
 //        UserDefaults.standard.removeObject(forKey: "leaderboard")
         LeaderboardData.shared.decodeFromUserDefaults()
-        print(LeaderboardData.shared.leaderboard)
     }
 
     @IBAction func startGameButtonPressed(_ sender: Any) {
@@ -57,7 +56,7 @@ class FirstScreenViewController: UIViewController {
     }
     
     @IBAction func leaderBoardButtonPressed(_ sender: Any) {
-      
+    
     }
 }
 

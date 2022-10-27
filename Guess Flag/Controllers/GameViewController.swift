@@ -61,7 +61,7 @@ class GameViewController: UIViewController {
             sender.backgroundColor = .green
             playerScores += 1
         } else {
-            sender.backgroundColor = .systemRed
+            sender.backgroundColor = .red
             
             for button in answerOptions {
                 for i in 0..<currentQuestion.answers.count {
@@ -86,25 +86,26 @@ class GameViewController: UIViewController {
     //MARK: Click on submit
     @IBAction func submitButtonPressed(_ sender: Any) {
         guard let name = name else { return }
+        var playersList = LeaderboardData.shared.leaderboard
         
-        if !LeaderboardData.shared.leaderboard.isEmpty {
-            for index in 0..<LeaderboardData.shared.leaderboard.count {
-                if LeaderboardData.shared.leaderboard[index].name == name {
-                    LeaderboardData.shared.leaderboard.remove(at: index)
-                    LeaderboardData.shared.leaderboard.append(Leaderboard(name: name, score: playerScores))
-                    break
-                } else {
-                    LeaderboardData.shared.leaderboard.append(Leaderboard(name: name, score: playerScores))
-                    break
-                }
+        if !playersList.isEmpty {
+    
+            if let index = playersList.firstIndex(where: { $0.name == name }) {
+                playersList[index] = Leaderboard(name: name, score: playerScores)
+            } else {
+                playersList.append(Leaderboard(name: name, score: playerScores))
             }
+            
         } else {
-            LeaderboardData.shared.leaderboard.append(Leaderboard(name: name, score: playerScores))
+            playersList.append(Leaderboard(name: name, score: playerScores))
         }
- 
+        
+        LeaderboardData.shared.leaderboard = playersList
         LeaderboardData.shared.encodeToUserDefaults()
-        dismiss(animated: true)
+        
+        navigationController?.popViewController(animated: true)
+        }
     }
     
     
-}
+

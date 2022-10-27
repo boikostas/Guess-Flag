@@ -22,18 +22,6 @@ class LeaderboardViewController: UIViewController {
         
         leaderboard = LeaderboardData.shared.leaderboard.sorted { $0.score > $1.score }
     }
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
