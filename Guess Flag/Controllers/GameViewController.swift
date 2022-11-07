@@ -9,15 +9,13 @@ import UIKit
 
 class GameViewController: UIViewController {
     
+    @IBOutlet weak var questionNumberLabel: UILabel!
+    @IBOutlet weak var undertableView: UIView!
     @IBOutlet weak var flagImage: UIImageView?
-    @IBOutlet var answerOptions: [UIButton]! {
-        didSet {
-            answerOptions.forEach { $0.setTitleColor(.black, for: .disabled) }
-        }
-    }
+    @IBOutlet var answerOptions: [UIButton]!
     @IBOutlet weak var submitButton: UIButton!
-    var name: String?
     
+    var name: String?
     var selectedQuestion = 0
     var playerScores = 0
     
@@ -35,19 +33,35 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         submitButton.isHidden = true
         displayQuestions()
     }
     
+    //MARK: Setup UI
+    private func setupUI() {
+        undertableView.layer.cornerRadius = 20
+        answerOptions.forEach { $0.setTitleColor(.black, for: .disabled) }
+        flagImage?.layer.cornerRadius = 20
+        flagImage?.layer.borderWidth = 0.5
+        flagImage?.layer.borderColor = UIColor.lightGray.cgColor
+        
+        answerOptions.forEach {
+            $0.setTitleColor(.black, for: .normal)
+            $0.layer.cornerRadius = 15
+            $0.layer.borderWidth = 0.5
+            $0.layer.borderColor = UIColor.lightGray.cgColor
+        }
+    }
+    
     //MARK: Display questions mthd
     private func displayQuestions() {
+        questionNumberLabel.text = "QUESTION \(selectedQuestion + 1) OF \(questions.count)"
         flagImage?.image = questions[selectedQuestion].image
         for i in 0..<(answerOptions?.count ?? 0) {
             answerOptions[i].setTitle(questions[selectedQuestion].answers[i].name, for: .normal)
             answerOptions[i].tag = i
             answerOptions[i].backgroundColor = .white
-            answerOptions[i].setTitleColor(.black, for: .normal)
-            answerOptions[i].layer.cornerRadius = 15
             answerOptions[i].isEnabled = true
         }
     }
@@ -87,18 +101,12 @@ class GameViewController: UIViewController {
     @IBAction func submitButtonPressed(_ sender: Any) {
         guard let name = name else { return }
         var playersList = LeaderboardData.shared.leaderboard
-        
-        if !playersList.isEmpty {
     
             if let index = playersList.firstIndex(where: { $0.name == name }) {
                 playersList[index] = Leaderboard(name: name, score: playerScores)
             } else {
                 playersList.append(Leaderboard(name: name, score: playerScores))
             }
-            
-        } else {
-            playersList.append(Leaderboard(name: name, score: playerScores))
-        }
         
         LeaderboardData.shared.leaderboard = playersList
         LeaderboardData.shared.encodeToUserDefaults()

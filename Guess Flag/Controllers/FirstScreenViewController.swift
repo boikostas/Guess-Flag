@@ -9,6 +9,9 @@ import UIKit
 
 class FirstScreenViewController: UIViewController {
     
+    
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var leaderboardButton: UIButton!
     var nameTextField = UITextField()
     var alert = UIAlertController()
 
@@ -16,6 +19,9 @@ class FirstScreenViewController: UIViewController {
         super.viewDidLoad()
 //        UserDefaults.standard.removeObject(forKey: "leaderboard")
         LeaderboardData.shared.decodeFromUserDefaults()
+        
+        startButton.layer.cornerRadius = 15
+        leaderboardButton.layer.cornerRadius = 15
     }
 
     @IBAction func startGameButtonPressed(_ sender: Any) {
