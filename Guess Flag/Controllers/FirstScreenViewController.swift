@@ -14,16 +14,19 @@ class FirstScreenViewController: UIViewController {
     @IBOutlet weak var leaderboardButton: UIButton!
     var nameTextField = UITextField()
     var alert = UIAlertController()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        UserDefaults.standard.removeObject(forKey: "leaderboard")
+        //        UserDefaults.standard.removeObject(forKey: "leaderboard")
         LeaderboardData.shared.decodeFromUserDefaults()
         
         startButton.layer.cornerRadius = 15
         leaderboardButton.layer.cornerRadius = 15
+        
+        
     }
-
+    
+    
     @IBAction func startGameButtonPressed(_ sender: Any) {
         alert = UIAlertController(title: "Enter your name", message: nil, preferredStyle: .alert)
         
@@ -36,7 +39,7 @@ class FirstScreenViewController: UIViewController {
         
         let startAction = UIAlertAction(title: "Let`s start", style: .default) { action in
             guard let name = self.nameTextField.text else { return }
-                
+            
             guard let gameVC = self.storyboard?.instantiateViewController(withIdentifier: "game") as? GameViewController else { return }
             gameVC.name = name
             self.show(gameVC, sender: nil)
@@ -62,7 +65,7 @@ class FirstScreenViewController: UIViewController {
     }
     
     @IBAction func leaderBoardButtonPressed(_ sender: Any) {
-    
+        
     }
 }
 

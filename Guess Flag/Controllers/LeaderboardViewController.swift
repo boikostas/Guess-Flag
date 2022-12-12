@@ -14,9 +14,14 @@ class LeaderboardViewController: UIViewController {
     var leaderboard = [Leaderboard]()
     
     override func viewDidLoad() {
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+    
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = UIColor(named: "defaultBackground")
         
         tableView.register(UINib(nibName: "LeaderboardTableViewCell", bundle: nil), forCellReuseIdentifier: "leaderboard cell")
         
@@ -38,6 +43,8 @@ extension LeaderboardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "leaderboard cell") as? LeaderboardTableViewCell else { return UITableViewCell() }
+        
+        cell.layer.cornerRadius = 15
         
         cell.addData(name: leaderboard[indexPath.row].name, score: leaderboard[indexPath.row].score)
         
