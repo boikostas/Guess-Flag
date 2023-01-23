@@ -20,16 +20,7 @@ class GameViewController: UIViewController {
     var playerScores = 0
     
     // MARK: Questions list
-    let questions = [
-        Question(image: UIImage(named: "ukraine")!,
-                 answers: [Answer(name: "Poland"), Answer(name: "France"), Answer(name: "Ukraine", type: .correct), Answer(name: "Bolivia")]),
-        Question(image: UIImage(named: "usa")!,
-                 answers: [Answer(name: "Canada"), Answer(name: "USA", type: .correct), Answer(name: "Australia"), Answer(name: "Germany")]),
-        Question(image: UIImage(named: "china")!,
-                 answers: [Answer(name: "North Korea"), Answer(name: "Chile", type: .wrong), Answer(name: "Japan"), Answer(name: "China", type: .correct)]),
-        Question(image: UIImage(named: "canada")!,
-                 answers: [Answer(name: "Canada", type: .correct), Answer(name: "Mexico"), Answer(name: "Singapore"), Answer(name: "UK")]),
-    ]
+    let questions = QuestionList.shared.list
     
     override func viewDidLoad() {
         super.viewDidLoad()
